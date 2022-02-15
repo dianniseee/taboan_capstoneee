@@ -1,6 +1,7 @@
 package com.example.taboan_capstone;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -157,15 +158,22 @@ public class login extends Fragment {
                                 editor.putString(KEY_USERNAME,et_uName.getText().toString());
                                 editor.apply();
                             }else{
-                                Home home = new Home();
+//                                Home home = new Home();
+//
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("username", et_uName.getText().toString());
+//                                home.setArguments(bundle);
+//
+//                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
+//                                transaction.replace(R.id.mainLayout,home);
+//                                transaction.commit();
 
+                                Intent intent = new Intent(getActivity(), Dashboard.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putString("username", et_uName.getText().toString());
-                                home.setArguments(bundle);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
 
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
-                                transaction.replace(R.id.mainLayout,home);
-                                transaction.commit();
 
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(KEY_USERNAME,et_uName.getText().toString());

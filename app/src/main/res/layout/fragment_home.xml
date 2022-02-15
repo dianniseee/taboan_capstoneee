@@ -16,6 +16,16 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/tv_welcome1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tv_welcome"
+            android:text="home fragment"
+            android:layout_centerHorizontal="true"
+            android:textSize="30sp"
+            />
+        <TextView
             android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

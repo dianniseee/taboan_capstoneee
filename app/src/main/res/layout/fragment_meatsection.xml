@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="0dp"
-    tools:context=".vegfruit">
+    tools:context=".meatsection">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -17,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="#FFFFFF">
-
             <ImageView
                 android:id="@+id/backimg"
                 android:layout_width="wrap_content"
@@ -30,10 +28,12 @@
                 android:id="@+id/subcat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="VEGETABLE &amp; FRUIT SECTION"
-                android:textSize="15sp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/black"
+                android:text="MEAT SECTION"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -48,7 +48,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             android:id="@+id/recyclerView1"/>
 
     </LinearLayout>

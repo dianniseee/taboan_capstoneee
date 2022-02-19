@@ -26,11 +26,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class login extends Fragment {
+
 
     EditText et_uName, et_password;
     TextView tv_register;
@@ -39,8 +44,9 @@ public class login extends Fragment {
     RequestQueue requestQueue;
     StringRequest stringRequest;
     SharedPreferences sharedPreferences;
+    TextView alert;
 
-    private static final String SHARED_PREF_NAME = "mypref";
+    public static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
 
     public login() {
@@ -57,14 +63,12 @@ public class login extends Fragment {
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String spName = sharedPreferences.getString(KEY_USERNAME, null);
 
-
-
-
         et_uName = v.findViewById(R.id.et_Uname);
         et_password = v.findViewById(R.id.et_password);
         btn_login = v.findViewById(R.id.btn_login);
         tv_register = v.findViewById(R.id.tv_register);
         progressBar = v.findViewById(R.id.progressBar);
+        alert = v.findViewById(R.id.alert);
         setTv_register();
         setBtn_Login();
 
@@ -136,28 +140,75 @@ public class login extends Fragment {
         requestQueue = Volley.newRequestQueue(getActivity());
         stringRequest = new StringRequest(
                 Request.Method.POST,
-                "https://capierap.online/verifyUser.php",
+                "https://capierap.online/login.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.equals("success")) {
-                            Toast.makeText(getActivity(), "Logged in", Toast.LENGTH_SHORT).show();
 
-                            if(et_uName.getText().toString().equals("admin")){
-                                admin admin1 = new admin();
+                        try {
 
-                                Bundle bundle = new Bundle();
-                                bundle.putString("username", et_uName.getText().toString());
-                                admin1.setArguments(bundle);
 
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
-                                transaction.replace(R.id.mainLayout,admin1);
-                                transaction.commit();
+                            JSONObject jsonobject = new JSONObject(response);
+
+                            String success = jsonobject.getString("success");
+                            JSONArray jsonarray = jsonobject.getJSONArray("login");
+                            JSONObject jo = jsonarray.getJSONObject(0);
+
+                            if(success.equals("1")) {
+                                Toast.makeText(getActivity(), "Logged in", Toast.LENGTH_SHORT).show();
+
+
 
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(KEY_USERNAME,et_uName.getText().toString());
+
+                                //Toast.makeText(getApplicationContext(), jsonarray.toString(), Toast.LENGTH_LONG).show();
+                                editor.putString("name",jo.getString("name"));
+                                editor.putString("username",jo.getString("username"));
+                                editor.putString("password",jo.getString("password"));
+                                editor.putString("contact",jo.getString("contact"));
+                                editor.putString("address",jo.getString("address"));
                                 editor.apply();
+                                //Toast.makeText(Login.this,sharedPreferences.getString("un",""),Toast.LENGTH_LONG).show();
+
+                                Home home = new Home();
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
+                                transaction.replace(R.id.mainLayout,home);
+                                transaction.commit();
+
                             }else{
+                                Toast.makeText(getActivity(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+                                alert.setVisibility(View.VISIBLE);
+                                alert.setText("Wrong Username or Password");
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+
+                        }
+
+
+//                        if (response.equals("success")) {
+//                            Toast.makeText(getActivity(), "Logged in", Toast.LENGTH_SHORT).show();
+//
+//                            if(et_uName.getText().toString().equals("admin")){
+//                                admin admin1 = new admin();
+//
+//                                Bundle bundle = new Bundle();
+//                                bundle.putString("username", et_uName.getText().toString());
+//                                admin1.setArguments(bundle);
+//
+//                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
+//                                transaction.replace(R.id.mainLayout,admin1);
+//                                transaction.commit();
+//
+//                                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                editor.putString(KEY_USERNAME,et_uName.getText().toString());
+//                                editor.apply();
+//                            }else{
+//
+//
 //                                Home home = new Home();
 //
 //                                Bundle bundle = new Bundle();
@@ -167,23 +218,23 @@ public class login extends Fragment {
 //                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
 //                                transaction.replace(R.id.mainLayout,home);
 //                                transaction.commit();
-
-                                Intent intent = new Intent(getActivity(), Dashboard.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("username", et_uName.getText().toString());
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(KEY_USERNAME,et_uName.getText().toString());
-                                editor.apply();
-                            }
-
-                        }else{
-                            Toast.makeText(getActivity(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
+//
+////                                Intent intent = new Intent(getActivity(), Dashboard.class);
+////                                Bundle bundle = new Bundle();
+////                                bundle.putString("username", et_uName.getText().toString());
+////                                intent.putExtras(bundle);
+////                                startActivity(intent);
+//
+//
+//                                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                                editor.putString(KEY_USERNAME,et_uName.getText().toString());
+//                                editor.apply();
+//                            }
+//
+//                        }else{
+//                            Toast.makeText(getActivity(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();
+//                            progressBar.setVisibility(View.GONE);
+//                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -201,6 +252,7 @@ public class login extends Fragment {
                 Person.put("password", et_password.getText().toString());
                 return Person;
             }
+
         };
 
         requestQueue.add(stringRequest);

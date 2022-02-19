@@ -159,8 +159,7 @@ public class register extends Fragment {
                 User.put("password", et_pass.getText().toString());
                 User.put("name", et_fname.getText().toString());
                 User.put("contact", et_contact.getText().toString());
-                User.put("address", et_contact.getText().toString());
-
+                User.put("address", et_address.getText().toString());
                 return User;
             }
         };

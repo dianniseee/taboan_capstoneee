@@ -42,7 +42,7 @@
         android:background="@drawable/custom_input"
         android:drawablePadding="10dp"
         android:fontFamily="sans-serif-light"
-        android:hint="Email Address"
+        android:hint="Username"
 
         android:inputType="textEmailAddress"
         android:padding="15dp"
@@ -56,7 +56,6 @@
         android:layout_height="50dp"
         android:layout_below="@id/et_Uname"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/custom_input"
         android:drawablePadding="10dp"
         android:fontFamily="sans-serif-light"
@@ -66,6 +65,15 @@
         android:paddingStart="10dp"
         android:textColorHint="#757575"
         android:textSize="18dp" />
+    <TextView
+        android:id="@+id/alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/et_password"
+        android:layout_below="@+id/et_password"
+        android:text="Incorect Password!"
+        android:textColor="#FF0000"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/btn_login"
@@ -73,8 +81,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#FF077415"
         android:fontFamily="sans-serif-light"
+        android:minHeight="48dp"
         android:padding="10dp"
         android:text="LOGIN"
         android:textSize="18sp"

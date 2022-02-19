@@ -19,49 +19,61 @@
             android:id="@+id/tv_welcome1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_below="@+id/tv_welcome"
-            android:text="home fragment"
             android:layout_centerHorizontal="true"
-            android:textSize="30sp"
-            />
+            android:layout_marginTop="20dp"
+            android:text="home fragment"
+            android:textSize="30sp" />
+
         <TextView
             android:id="@+id/tv_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:text="WELCOME"
             android:layout_centerHorizontal="true"
-            android:textSize="30sp"
-            />
+            android:layout_marginTop="50dp"
+            android:text="WELCOME"
+            android:textSize="30sp" />
 
 
         <Button
-            android:id="@+id/productList_btn"
+            android:id="@+id/category_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_welcome"
+            android:layout_below="@+id/tv_welcome1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#4CAF50"
             android:text="CATEGORY" />
 
         <Button
             android:id="@+id/profile_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_welcome"
+            android:layout_below="@+id/category_btn"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="75dp"
-            android:text="PROFILE" />
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Profile" />
+
+        <Button
+            android:id="@+id/shopbasket_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Shop Basket" />
 
         <Button
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="75dp"
+            android:layout_below="@id/shopbasket_btn"
             android:layout_centerHorizontal="true"
-            android:text="LOGOUT"
-            android:layout_below="@id/productList_btn" />
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#4CAF50"
+            android:text="LOGOUT" />
 
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -16,10 +16,10 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_gravity="center"
             android:id="@+id/imageView"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:layout_gravity="center"
             android:padding="4dp" />
 
             <TextView

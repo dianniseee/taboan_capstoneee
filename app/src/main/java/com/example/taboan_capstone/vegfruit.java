@@ -103,7 +103,7 @@ public class vegfruit extends Fragment{
                                 double prod_price = Integer.parseInt(jo.getString("prod_price"));
                                 double prod_quantity = Integer.parseInt(jo.getString("prod_quantity"));
                                 String imgstr = jo.getString("image");
-
+/*
                                 product p = new product();
                                 p.setProd_name(prod_name.substring(0, 1).toUpperCase() + prod_name.substring(1));
                                 p.setProd_desc(prod_desc);
@@ -115,6 +115,8 @@ public class vegfruit extends Fragment{
                                 p.setImage(imgstr);
 
                                 productList.add(p);
+
+ */
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

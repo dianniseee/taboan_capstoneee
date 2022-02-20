@@ -197,13 +197,13 @@
 
 
                     <Button
+                        android:id="@+id/meatseaction_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:background="#00000000"
                         android:padding="25dp"
                         android:text="View"
-                        android:id="@+id/meatseaction_btn"
                         android:textColor="#000000" />
 
                 </RelativeLayout>

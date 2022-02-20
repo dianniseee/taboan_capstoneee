@@ -1,5 +1,8 @@
 package com.example.taboan_capstone;
 
+import android.media.Image;
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 public class product implements Serializable {
@@ -13,14 +16,14 @@ public class product implements Serializable {
     private int quant;
     private int id;
 
-//    public product(String prod_name, String prod_desc, String prod_category, double prod_price, double prod_quantity, String image) {
-//        this.prod_name = prod_name;
-//        this.prod_desc = prod_desc;
-//        this.prod_category = prod_category;
-//        this.prod_price = prod_price;
-//        this.prod_quantity = prod_quantity;
-//        this.image = image;
-//    }
+    public product(String prod_name, String prod_desc, String prod_category, double prod_price, double prod_quantity, String image) {
+        this.prod_name = prod_name;
+        this.prod_desc = prod_desc;
+        this.prod_category = prod_category;
+        this.prod_price = prod_price;
+        this.prod_quantity = prod_quantity;
+        this.image = image;
+    }
 
     public String getProd_name() {
         return prod_name;

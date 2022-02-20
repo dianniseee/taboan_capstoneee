@@ -68,9 +68,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewPrice.setText(String.valueOf(getposition.getProd_price()));
         holder.textViewQuantity.setText(String.valueOf(getposition.getProd_quantity()));
 
-        byte[] decodedString = Base64.decode(getposition.getImage(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        holder.imageView.setImageBitmap(decodedByte);
+        byte[] bytes = Base64.decode(getposition.getImage(),Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0, bytes.length);
+        holder.imageView.setImageBitmap(bitmap);
 
         holder.Qty.setText(Integer.toString(getposition.getQuant()));
 

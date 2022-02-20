@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,7 @@ public class meatsection extends Fragment {
 
     private static final String PRODUCT_URL = "https://capierap.online/apimeat.php";
     RecyclerView recyclerView;
+
     ProductAdapter adapter;
     List<product> productList;
     ImageView backPress;
@@ -89,21 +92,20 @@ public class meatsection extends Fragment {
                     public void onResponse(String response) {
                         try {
                             JSONArray products = new JSONArray(response);
-
-
                             for (int i =0; i<products.length(); i++){
                                 JSONObject productObject = products.getJSONObject(i);
 
-                                String name = productObject.getString("prod_name");
-                                String desc = productObject.getString("prod_desc");
-                                String category = productObject.getString("prod_category");
-                                Double price = productObject.getDouble("prod_price");
-                                Double quantity = productObject.getDouble("prod_quantity");
-                                String image = productObject.getString("image");
+                                product product = new product(
+                                        productObject.getString("prod_name"),
+                                        productObject.getString("prod_desc"),
+                                        productObject.getString("prod_category"),
+                                        productObject.getDouble("prod_price"),
+                                        productObject.getDouble("prod_quantity"),
+                                        productObject.getString("image")
+                                );
 
-//                                product product = new product(name, desc, category, price, quantity, image);
-
-//                                productList.add(product);
+                               // product product = new product(name, desc, category, price, quantity, image);
+                                productList.add(product);
                             }
                             adapter = new ProductAdapter(getContext(), productList);
                             recyclerView.setAdapter(adapter);

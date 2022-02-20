@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 
 public class Home extends Fragment {
 
+    public static int CLEAR_CART = 0;
     TextView tv_welcome;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -54,6 +55,7 @@ public class Home extends Fragment {
         logout = v.findViewById(R.id.logout);
         profile_btn = v.findViewById(R.id.profile_btn);
 
+
         profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,18 +79,18 @@ public class Home extends Fragment {
         return v;
     }
 
-//    private void setshopbasketBtn() {
-//        shopbasketBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                basket vegfruitf = new basket();
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right, R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
-//                transaction.replace(R.id.mainLayout,vegfruitf);
-//                transaction.commit();
-//
-//            }
-//        });
-//    }
+    private void setshopbasketBtn() {
+        shopbasketBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                User_Basket vegfruitf = new User_Basket();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right, R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
+                transaction.replace(R.id.mainLayout,vegfruitf);
+                transaction.commit();
+
+            }
+        });
+    }
 
 
 //    public void setLogout() {

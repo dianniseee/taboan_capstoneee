@@ -1,5 +1,10 @@
 package com.example.taboan_capstone;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,58 +12,170 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link User_Basket#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+
 public class User_Basket extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    SharedPreferences sharedPreferences;
+    public RequestQueue mQueue;
+    public int order_id;
+    HashMap<Integer,Integer> basketlist ;
+    ArrayList<product> list;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public User_Basket() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment User_Basket.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static User_Basket newInstance(String param1, String param2) {
-        User_Basket fragment = new User_Basket();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user__basket, container, false);
+        View v = inflater.inflate(R.layout.fragment_user__basket, container, false);
+
+
+        sharedPreferences = getActivity().getSharedPreferences(login.SHARED_PREF_NAME,MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Bundle extra =  getActivity().getIntent().getBundleExtra("cart");
+        list = (ArrayList<product>) extra.getSerializable("objects");
+
+
+        if(list.isEmpty()){
+
+//            View v = inflater.inflate(R.layout.empty_basket, container, false);
+            Button shop = v.findViewById(R.id.shopnow);
+            shop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getActivity().finish();
+                }
+            });
+            return v;
+        }
+        else
+        {
+//            View v = inflater.inflate(R.layout.fragment_user__basket, container, false);
+            TextView totalPrice = v.findViewById(R.id.totalprice);
+            ListView listcart = v.findViewById(R.id.cartlist);
+            int Price = 0;
+            mQueue = VolleySingleton.getInstance(getContext()).getmRequestqueue();
+            BasketListAdapter adapter = new BasketListAdapter(getContext(),R.layout.basket_list,list);
+            listcart.setAdapter(adapter);
+            basketlist = new HashMap<>();
+            for(product prod : list){
+                Price+=prod.getProd_price()*prod.getQuant();
+                basketlist.put(prod.getId(),prod.getQuant());
+            }
+            //Toast.makeText(this,Integer.toString(adapter.totalprice),Toast.LENGTH_LONG).show();
+            totalPrice.setText("₱"+Price);
+            String address = sharedPreferences.getString("address","");
+            String Name = sharedPreferences.getString("name","");
+            TextView cartName = v.findViewById(R.id.cartName);
+            TextView add = v.findViewById(R.id.addresscart);
+            cartName.setText(Name);
+            add.setText(address);
+            Button order = v.findViewById(R.id.order);
+            order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                    Order();
+
+                }
+            });
+            Button edit = v.findViewById(R.id.edit);
+//            edit.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent i = new Intent(getApplicationContext(),edit_profile.class);
+//                    startActivity(i);
+//                }
+//            });
+            return v;
+        }
+
+
     }
+
+//    private void Order() {
+//
+//        String url = "paste your link here";
+//        StringRequest sr = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonobject = new JSONObject(response);
+//
+//                    String success = jsonobject.getString("success");
+//
+//                    if(success.equals("1")) {
+//                        //Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_LONG).show();
+//                        list.clear();
+//                        basketlist.clear();
+//                        Home.CLEAR_CART=1;
+//                        Toast.makeText(getContext(), "Successful Order PLaced", Toast.LENGTH_LONG).show();
+//
+//                        //Toast.makeText(Login.this,sharedPreferences.getString("un",""),Toast.LENGTH_LONG).show();
+//                    }
+//                    else{
+//                        Toast.makeText(getContext(), "Order Failed ", Toast.LENGTH_LONG).show();
+//
+//                    }
+////                    progressDialog.dismiss();
+//
+//                } catch (JSONException e) {
+//                    Toast.makeText(getContext(), "Order Failed in Catch", Toast.LENGTH_LONG).show();
+//                    e.printStackTrace();
+////                    progressDialog.dismiss();
+//                }
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                error.printStackTrace();
+//                Toast.makeText(getContext(), "Error Logging in check Internet Connection", Toast.LENGTH_LONG).show();
+////                progressDialog.dismiss();
+//            }
+//        }){
+//            @Override
+//            protected Map<String,String> getParams(){
+//                HashMap<String,String> param = new HashMap<String,String>();
+//                param.put("user_id",sharedPreferences.getString("id",""));
+//                Gson gson = new Gson();
+//                String jsonhashmap = gson.toJson(basketlist);
+//
+//                param.put("data",jsonhashmap);
+//
+//                return param;
+//            }
+//
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String,String> params = new HashMap<String, String>();
+//                params.put("Content-Type","application/x-www-form-urlencoded");
+//                return params;
+//            }
+//        };
+//
+//        mQueue.add(sr);
+//    }
 }

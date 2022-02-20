@@ -45,6 +45,7 @@ public class login extends Fragment {
     StringRequest stringRequest;
     SharedPreferences sharedPreferences;
     TextView alert;
+    String spName;
 
     public static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_USERNAME = "username";
@@ -61,7 +62,7 @@ public class login extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         sharedPreferences = getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String spName = sharedPreferences.getString(KEY_USERNAME, null);
+        spName = sharedPreferences.getString(KEY_USERNAME, null);
 
         et_uName = v.findViewById(R.id.et_Uname);
         et_password = v.findViewById(R.id.et_password);
@@ -73,7 +74,7 @@ public class login extends Fragment {
         setBtn_Login();
 
         if(spName!=null){
-            if(spName.equals("admin")){
+            if(spName.equalsIgnoreCase("admin")){
                 admin admin1 = new admin();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
                 transaction.replace(R.id.mainLayout,admin1);
@@ -157,8 +158,6 @@ public class login extends Fragment {
                             if(success.equals("1")) {
                                 Toast.makeText(getActivity(), "Logged in", Toast.LENGTH_SHORT).show();
 
-
-
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putString(KEY_USERNAME,et_uName.getText().toString());
 
@@ -171,10 +170,13 @@ public class login extends Fragment {
                                 editor.apply();
                                 //Toast.makeText(Login.this,sharedPreferences.getString("un",""),Toast.LENGTH_LONG).show();
 
-                                Home home = new Home();
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
-                                transaction.replace(R.id.mainLayout,home);
-                                transaction.commit();
+                                    Home home = new Home();
+                                    FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right,R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
+                                    transaction.replace(R.id.mainLayout,home);
+                                    transaction.commit();
+
+
+
 
                             }else{
                                 Toast.makeText(getActivity(), "Login failed. Please try again.", Toast.LENGTH_SHORT).show();

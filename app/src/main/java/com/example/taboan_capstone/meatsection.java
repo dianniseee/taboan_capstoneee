@@ -1,5 +1,6 @@
 package com.example.taboan_capstone;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -41,7 +42,8 @@ public class meatsection extends Fragment {
 
     ProductAdapter adapter;
     List<product> productList;
-    ImageView backPress;
+    ImageView backPress, basket;
+
 
     Button productList_btn;
 
@@ -59,6 +61,7 @@ public class meatsection extends Fragment {
         productList = new ArrayList<>();
         recyclerView = v.findViewById(R.id.recyclerView1);
         backPress = v.findViewById(R.id.backimg);
+        basket = v.findViewById(R.id.basketimg);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
         //adding some items to our list
@@ -75,6 +78,17 @@ public class meatsection extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.mainLayout,fragment);
+                fragmentTransaction.commit();
+            }
+        });
+
+        basket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User_Basket fragment = new User_Basket();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mainLayout,fragment).addToBackStack("tag");
                 fragmentTransaction.commit();
             }
         });

@@ -59,7 +59,7 @@ public class Home extends Fragment {
             public void onClick(View view) {
                 User_Profile vegfruitf = new User_Profile();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().setCustomAnimations(R.anim.enter_slide_right, R.anim.exit_slide_left, R.anim.enter_slide_left, R.anim.exit_slide_right);
-                transaction.replace(R.id.mainLayout,vegfruitf);
+                transaction.replace(R.id.mainLayout,vegfruitf).addToBackStack("tag");
                 transaction.commit();
             }
         });

@@ -2,6 +2,7 @@ package com.example.taboan_capstone;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.NetworkResponse;
@@ -39,8 +41,8 @@ public class vegfruit extends Fragment{
     private static final int CLEAR_CART = 0;
     RecyclerView recyclerView;
     ProductAdapter adapter;
-    List<product> productList;
-    ImageView backPress;
+    ArrayList<product> productList;
+    ImageView backPress, basketimg_btn;
     public RequestQueue mQueue;
 
     Button productList_btn;
@@ -59,8 +61,22 @@ public class vegfruit extends Fragment{
         productList = new ArrayList<>();
         recyclerView = v.findViewById(R.id.recyclerView1);
         backPress = v.findViewById(R.id.backimg);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        basketimg_btn = v.findViewById(R.id.basketimg);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        basketimg_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User_Basket fragment = new User_Basket();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mainLayout,fragment);
+                fragmentTransaction.commit();
+            }
+        });
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+//        recyclerView.setLayoutManager(linearLayoutManager);
         //adding some items to our list
 
         getProducts();
@@ -88,6 +104,7 @@ public class vegfruit extends Fragment{
 
     private void getProducts() {
         String url = "https://capierap.online/getProductData.php";
+
         JsonObjectRequest ObjRequest = new JsonObjectRequest(Request.Method.GET,url,null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -102,7 +119,7 @@ public class vegfruit extends Fragment{
                                 int id = Integer.parseInt(jo.getString("prod_id"));
                                 double prod_price = Integer.parseInt(jo.getString("prod_price"));
                                 double prod_quantity = Integer.parseInt(jo.getString("prod_quantity"));
-                                String imgstr = jo.getString("image");
+//                                String imgstr = jo.getString("image");
 
                                 product p = new product();
                                 p.setProd_name(prod_name.substring(0, 1).toUpperCase() + prod_name.substring(1));
@@ -112,7 +129,7 @@ public class vegfruit extends Fragment{
                                 p.setProd_price(prod_price);
                                 p.setProd_quantity(prod_quantity);
                                 p.setQuant(0);
-                                p.setImage(imgstr);
+//                                p.setImage(imgstr);
 
                                 productList.add(p);
                             }
@@ -127,6 +144,7 @@ public class vegfruit extends Fragment{
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError e) {
+                        Log.i("tagconvertstr", "["+e+"]");
                         NetworkResponse response = e.networkResponse;
                         if(response != null && response.data != null){
                             Toast.makeText(getContext(),"errorMessage:"+response.statusCode, Toast.LENGTH_SHORT).show();

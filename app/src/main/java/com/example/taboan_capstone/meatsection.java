@@ -35,12 +35,12 @@ import java.util.List;
 public class meatsection extends Fragment {
 
     private static final String PRODUCT_URL = "https://capierap.online/apimeat.php";
-    RecyclerView recyclerView;
-    ProductAdapter adapter;
-    List<product> productList;
-    ImageView backPress;
-
-    Button productList_btn;
+//    RecyclerView recyclerView;
+//    ProductAdapter adapter;
+//    List<product> productList;
+//    ImageView backPress;
+//
+//    Button productList_btn;
 
 
     public meatsection() {
@@ -52,29 +52,29 @@ public class meatsection extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_meatsection, container, false);
-
-        productList = new ArrayList<>();
-        recyclerView = v.findViewById(R.id.recyclerView1);
-        backPress = v.findViewById(R.id.backimg);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
-        //adding some items to our list
-
-        loadProducts();
-        //creating recyclerview adapter
-        adapter = new ProductAdapter(getContext(), productList);
-        recyclerView.setAdapter(adapter);
-
-        backPress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                User_Category fragment = new User_Category();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mainLayout,fragment);
-                fragmentTransaction.commit();
-            }
-        });
+//
+//        productList = new ArrayList<>();
+//        recyclerView = v.findViewById(R.id.recyclerView1);
+//        backPress = v.findViewById(R.id.backimg);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+//        //adding some items to our list
+//
+//        loadProducts();
+//        //creating recyclerview adapter
+//        adapter = new ProductAdapter(getContext(), productList);
+//        recyclerView.setAdapter(adapter);
+//
+//        backPress.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                User_Category fragment = new User_Category();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.mainLayout,fragment);
+//                fragmentTransaction.commit();
+//            }
+//        });
 
 
 
@@ -105,8 +105,8 @@ public class meatsection extends Fragment {
 
 //                                productList.add(product);
                             }
-                            adapter = new ProductAdapter(getContext(), productList);
-                            recyclerView.setAdapter(adapter);
+//                            adapter = new ProductAdapter(getContext(), productList);
+//                            recyclerView.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -138,17 +138,17 @@ public class meatsection extends Fragment {
         queue.add(stringRequest);
     }
 
-    public void setTv_productList_btn(){
-        productList_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new meatsection();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.mainLayout,fragment);
-                fragmentTransaction.commit();
-
-            }
-        });
-    }
+//    public void setTv_productList_btn(){
+//        productList_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Fragment fragment = new meatsection();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.mainLayout,fragment);
+//                fragmentTransaction.commit();
+//
+//            }
+//        });
+//    }
 }

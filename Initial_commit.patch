@@ -1640,7 +1640,7 @@ new file mode 100644
 +        productList = new ArrayList<>();
 +        recyclerView = v.findViewById(R.id.recyclerView1);
 +        recyclerView.setHasFixedSize(true);
-+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
++        //recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 +        //adding some items to our list
 +
 +        loadProducts();

@@ -5,10 +5,189 @@
     android:layout_height="match_parent"
     tools:context=".User_Basket">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:elevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradientbg"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+                    <TextView
+                        android:id="@+id/cartName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_margin="8dp"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center"
+                        android:layout_weight="8" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:paddingTop="10dp">
+
+                        <Button
+                            android:id="@+id/edit"
+                            android:layout_width="70dp"
+                            android:layout_height="48dp"
+                            android:backgroundTint="#228726"
+                            android:elevation="2dp"
+                            android:text="edit" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Address:"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/addresscart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text=""
+                    android:layout_marginBottom="10dp"
+
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="10"
+            android:layout_marginTop="10dp"
+            tools:ignore="MissingConstraints">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="10dp"
+                android:textStyle="bold"
+                android:text="Product Name"
+                android:textAlignment="textStart"
+                tools:ignore="RtlCompat"
+                android:layout_marginRight="2dp"
+                android:elevation="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Qty"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:elevation="2dp"
+                tools:ignore="RtlCompat"
+                android:layout_marginRight="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="Price"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat"
+                android:layout_marginRight="2dp"
+                android:elevation="2dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:elevation="2dp"
+                android:text="Total"
+                android:textAlignment="center"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/cartlist"
+            android:layout_width="match_parent"
+            android:layout_height="490dp" />
+
+        <LinearLayout
+            android:id="@+id/totallayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:weightSum="10"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="Total"
+                android:textSize="20dp"
+                android:textAlignment="textStart"
+                tools:ignore="RtlCompat" />
+            <TextView
+                android:id="@+id/totalprice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textSize="20dp"
+                android:text="0 Rs"
+                android:textAlignment="textEnd"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/order"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:elevation="2dp"
+            android:backgroundTint="#228726"
+            android:onClick="Checkout"
+            android:text="Confirm Order" />
+    </LinearLayout>
 
 </FrameLayout>

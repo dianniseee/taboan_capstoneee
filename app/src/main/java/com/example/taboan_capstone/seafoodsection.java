@@ -106,8 +106,8 @@ public class seafoodsection extends Fragment {
 
 //                                productList.add(product);
                             }
-                            adapter = new ProductAdapter(getContext(), productList);
-                            recyclerView.setAdapter(adapter);
+//                            adapter = new ProductAdapter(getContext(), productList);
+//                            recyclerView.setAdapter(adapter);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

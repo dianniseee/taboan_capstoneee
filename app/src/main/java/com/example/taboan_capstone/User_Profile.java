@@ -8,12 +8,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class User_Profile extends Fragment {
@@ -21,6 +23,7 @@ public class User_Profile extends Fragment {
     SharedPreferences sharedPreferences ;
     TextView name,username,contact,address;
     Button logout_btn;
+    ImageView backPress;
 
     public User_Profile() {
         // Required empty public constructor
@@ -37,11 +40,23 @@ public class User_Profile extends Fragment {
         contact = v.findViewById(R.id.TVcontact);
         address = v.findViewById(R.id.TVaddress);
         logout_btn = v.findViewById(R.id.logout);
+        backPress = v.findViewById(R.id.backimg);
 
         name.setText(sharedPreferences.getString("name",""));
         username.setText(sharedPreferences.getString("username",""));
         contact.setText(sharedPreferences.getString("contact",""));
         address.setText(sharedPreferences.getString("address",""));
+
+        backPress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Home fragment = new Home();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.mainLayout,fragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         logout_btn.setOnClickListener(new View.OnClickListener() {
             @Override

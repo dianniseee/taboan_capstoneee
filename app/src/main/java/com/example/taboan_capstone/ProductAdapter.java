@@ -14,6 +14,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -28,13 +29,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
 
     Context mCtx;
-    List<product> productList;
-    List<product> list;
+    ArrayList<product> productList;
+    ArrayList<product> list;
     ArrayList<product> cart = new ArrayList();
 
 //    private OnCardInfoListener onCardInfoListener;
 
-    public ProductAdapter(Context mCtx, List<product> productList) {
+    public ProductAdapter(Context mCtx, ArrayList<product> productList) {
         this.mCtx = mCtx;
         this.productList = productList;
         this.list = new ArrayList<>(productList);
@@ -68,62 +69,45 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewPrice.setText(String.valueOf(getposition.getProd_price()));
         holder.textViewQuantity.setText(String.valueOf(getposition.getProd_quantity()));
 
-        byte[] decodedString = Base64.decode(getposition.getImage(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        holder.imageView.setImageBitmap(decodedByte);
-
-        holder.Qty.setText(Integer.toString(getposition.getQuant()));
-
 //        Glide.with(mCtx)
 //                .load(getposition.getImage())
 //                .into(holder.imageView);
 
-        holder.addtobasket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.Qty.setText("1");
-                holder.addtobasket.setVisibility(View.INVISIBLE);
-                holder.plus.setVisibility(View.VISIBLE);
-                holder.minus.setVisibility(View.VISIBLE);
-                holder.Qty.setVisibility(View.VISIBLE);
-                getposition.setQuant(1);
-                cart.add(getposition);
-                notifyDataSetChanged();
-            }
+
+//        byte[] decodedString = Base64.decode(getposition.getImage(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//        holder.imageView.setImageBitmap(decodedByte);
+
+        holder.Qty.setText(Integer.toString(getposition.getQuant()));
+
+        holder.addtobasket.setOnClickListener(view -> {
+            cart.add(getposition);
+            notifyDataSetChanged();
+            Toast.makeText(view.getContext(),"Item Added to Basket", Toast.LENGTH_SHORT).show();
         });
 
-        holder.plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quant = Integer.parseInt((String) holder.Qty.getText());
-                quant++;
+        holder.plus.setOnClickListener(view -> {
+            int quant = Integer.parseInt((String) holder.Qty.getText());
+            quant++;
+            holder.Qty.setText(Integer.toString(quant));
+            getposition.setQuant(quant);
+
+            notifyDataSetChanged();
+        });
+
+        holder.minus.setOnClickListener(view -> {
+            int quant = Integer.parseInt((String) holder.Qty.getText());
+            quant--;
+            if(quant<1){
+                getposition.setQuant(0);
+                cart.remove(getposition);
+                notifyDataSetChanged();
+            }else{
                 holder.Qty.setText(Integer.toString(quant));
                 getposition.setQuant(quant);
-
                 notifyDataSetChanged();
             }
-        });
 
-        holder.minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int quant = Integer.parseInt((String) holder.Qty.getText());
-                quant--;
-                if(quant<1){
-                    holder.addtobasket.setVisibility(View.VISIBLE);
-                    holder.plus.setVisibility(View.INVISIBLE);
-                    holder.minus.setVisibility(View.INVISIBLE);
-                    holder.Qty.setVisibility(View.INVISIBLE);
-                    getposition.setQuant(0);
-                    cart.remove(getposition);
-                    notifyDataSetChanged();
-                }else{
-                    holder.Qty.setText(Integer.toString(quant));
-                    getposition.setQuant(quant);
-                    notifyDataSetChanged();
-                }
-
-            }
         });
 
 
@@ -194,12 +178,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             minus = itemView.findViewById(R.id.minus);
             plus = itemView.findViewById(R.id.plus);
 
-            if(Quant>0){
-                this.addtobasket.setVisibility(View.INVISIBLE);
-                this.plus.setVisibility(View.VISIBLE);
-                this.minus.setVisibility(View.VISIBLE);
-                this.Qty.setVisibility(View.VISIBLE);
-            }
         }
     }
 
